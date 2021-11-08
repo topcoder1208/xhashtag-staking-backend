@@ -89,6 +89,8 @@ async function initializePool() {
     let xTokenPoolVault = await xTokenMintObject.createAccount(poolSigner);
     let stakingMintVault = await stakingMintObject.createAccount(poolSigner);
 
+    console.log("X Token pool vault: ", xTokenPoolVault.toBase58())
+    console.log("X Stake Token vault: ", stakingMintVault.toBase58())
     let admin = {
         poolKeypair,
         poolSigner,
@@ -108,10 +110,10 @@ async function initializePool() {
                 xTokenDepositAuthority: provider.wallet.publicKey,
                 stakingMint: stakingMintObject.publicKey,
                 stakingVault: stakingMintVault,
-                rewardAMint: xTokenMintObject.publicKey,
-                rewardAVault: xTokenPoolVault,
-                rewardBMint: xTokenMintObject.publicKey,
-                rewardBVault: xTokenPoolVault,
+                rewardAMint: stakingMintObject.publicKey,
+                rewardAVault: stakingMintVault,
+                rewardBMint: stakingMintObject.publicKey,
+                rewardBVault: stakingMintVault,
                 poolSigner: poolSigner,
                 pool: poolPubkey,
                 tokenProgram: TOKEN_PROGRAM_ID,

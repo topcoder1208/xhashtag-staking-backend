@@ -37,7 +37,7 @@ let poolKeypair;
 
 // const connection = new Connection(clusterApiUrl('devnet'))
 const connection = new Connection('http://127.0.0.1:8899');
-const rewardDuration = new anchor.BN(5);
+const rewardDuration = new anchor.BN(30 * 24 * 60 * 60);
 
 function getProvider() {
     const provider = new anchor.Provider(
@@ -88,15 +88,18 @@ async function initializePool() {
 
     let xTokenPoolVault = await xTokenMintObject.createAccount(poolSigner);
     let stakingMintVault = await stakingMintObject.createAccount(poolSigner);
+    let mintAVault = await stakingMintObject.createAccount(poolSigner);
 
-    console.log("X Token pool vault: ", xTokenPoolVault.toBase58())
+    console.log("X Token pool vault : ", xTokenPoolVault.toBase58())
     console.log("X Stake Token vault: ", stakingMintVault.toBase58())
+    console.log("X Reward vault     : ", mintAVault.toBase58())
     let admin = {
         poolKeypair,
         poolSigner,
         poolNonce,
         xTokenPoolVault,
-        stakingMintVault
+        stakingMintVault,
+        mintAVault
     };
 
     await program.rpc.initializePool(
@@ -111,9 +114,9 @@ async function initializePool() {
                 stakingMint: stakingMintObject.publicKey,
                 stakingVault: stakingMintVault,
                 rewardAMint: stakingMintObject.publicKey,
-                rewardAVault: stakingMintVault,
+                rewardAVault: mintAVault,
                 rewardBMint: stakingMintObject.publicKey,
-                rewardBVault: stakingMintVault,
+                rewardBVault: mintAVault,
                 poolSigner: poolSigner,
                 pool: poolPubkey,
                 tokenProgram: TOKEN_PROGRAM_ID,

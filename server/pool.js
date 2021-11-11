@@ -8,11 +8,12 @@ const { User, claimForUsers } = require("./user");
 const fs = require('fs');
 
 const path = require('path');
+const os = require("os");
 
-const idl = JSON.parse(fs.readFileSync('/home/wstar/Desktop/xhashtag-staking/target/idl/xhashtag_staking.json'));
+const idl = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../xhashtag-staking/target/idl/xhashtag_staking.json')));
 const programID = new PublicKey(idl.metadata.address);
 
-const walletKeyData = JSON.parse(fs.readFileSync('/home/wstar/.config/solana/id.json'));
+const walletKeyData = JSON.parse(fs.readFileSync(os.homedir() + '/.config/solana/id.json'));
 const walletKeypair = Keypair.fromSecretKey(new Uint8Array(walletKeyData));
 const wallet = new anchor.Wallet(walletKeypair);
 

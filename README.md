@@ -2,7 +2,7 @@
 
 ### Before run this script, you must deploy stake pool solana program.
 
-`git clone https://github.com/xhashtag/xhashtag-staking-backend.git`
+`git clone https://github.com/topcoder1208/xhashtag-staking-backend.git`
 
 `cd xhashtag-staking-backend`
 
